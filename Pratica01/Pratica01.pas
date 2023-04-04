@@ -39,7 +39,7 @@ end;
 
 procedure TfrmPratica01.btnFecharClick(Sender: TObject);
 begin
-  Application.Destroy;
+  application.Terminate;
 end;
 
 end.
