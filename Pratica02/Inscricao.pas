@@ -67,6 +67,7 @@ implementation
   procedure TfrmFuncionarios.FormCreate(Sender: TObject);
   begin
     frmFuncionarios.Height := 317;
+    rbNome.Checked := True;
   end;
 
   procedure TfrmFuncionarios.btnCadastrarNovoCancelarClick(Sender: TObject);
@@ -83,7 +84,8 @@ implementation
   end;
 
 
-  // Função que testa se o CPF é válido. Fonte: https://www.devmedia.com.br/validando-o-cpf-em-uma-aplicacao-delphi/22180
+  // Função que testa se o CPF é válido.
+  // Fonte: https://www.devmedia.com.br/validando-o-cpf-em-uma-aplicacao-delphi/22180
   function isCPF(CPF: string): boolean;
   var  dig10, dig11: string;
       s, i, r, peso: integer;
@@ -95,10 +97,10 @@ implementation
         (CPF = '66666666666') or (CPF = '77777777777') or
         (CPF = '88888888888') or (CPF = '99999999999') or
         (length(CPF) <> 11))
-       then begin
-                isCPF := false;
-                exit;
-              end;
+    then begin
+      isCPF := false;
+      exit;
+    end;
 
   // try - protege o código para eventuais erros de conversão de tipo na função StrToInt
     try
@@ -140,10 +142,10 @@ implementation
     end;
   end;
 
-
+  //Para limpar os caracteres da máscara do CPF.
   function CleanCharacter(Valor: string): String;
      var i,j,posicao, tamanho :integer;
-     r, vlr, resultado : string;
+          r, vlr, resultado :string;
   begin
       posicao := 1;
       r := Valor;
@@ -172,43 +174,92 @@ implementation
 
     end;
     Result := vlr;
+  end;
 
+
+  //Função para verificar se um e-mail é válido.
+  //Fonte: https://www.devmedia.com.br/function-para-validar-email/16012
+  function CheckEMail(aStr: string): Boolean;
+  begin
+   aStr := Trim(UpperCase(aStr));
+   if Pos('@', aStr) > 1 then
+   begin
+     Delete(aStr, 1, pos('@', aStr));
+     Result := (Length(aStr) > 0) and (Pos('.', aStr) > 2);
+   end
+   else
+     Result := False;
   end;
 
 
   procedure TfrmFuncionarios.btnSubmeterClick(Sender: TObject);
   var tudoOK: boolean;
-      cpfLimpo: String;
+      cpfLimpo, primeiroNome: String;
   begin
     tudoOK := True;
+
+    //Verificação se campos obrigatórios estão em branco.
+    if (edNome.Text = '') and
+        (meCPF.Text = '') and
+        (meDataNascimento.Text = '') and
+        (meFone.Text = '') and
+        (edEmail.Text = '') and
+        (edEndereco.Text = '') and
+        (edMunicipio.Text = '') and
+        (meCEP.Text = '') then
+    begin
+      ShowMessage('Cmpos obrigatórios em branco. Revise, por favor.');
+      tudoOK := False;
+    end;
+
+    //Verificação se o radiobutton de nome social está marcado, mas campo nome social em branco.
     if rbNomeSocial.Checked and (edNomeSocial.Text = '') then
     begin
       ShowMessage('Opção de nome social selecionada, mas campo com nome social em branco. Revise, por favor.');
       tudoOK := False;
     end;
 
-    if YearsBetween(Now(), StrToDate(meDataNascimento.Text)) < 18 then
-    begin
-      ShowMessage('Pessoa menor de 18 anos!');
+    //Verificação se funcionário a ser cadastrado é maior de 18 anos.
+    Try
+      if YearsBetween(Now(), StrToDate(meDataNascimento.Text)) < 18 then
+      begin
+        ShowMessage('Pessoa menor de 18 anos!');
+        tudoOK := False;
+      end;
+    Except
+      ShowMessage('Formato de data errado! O formato esperado é DD/MM/AAAA. Revise, por favor!');
       tudoOK := False;
-    end;
+    End;
 
+    //Recebe o número do CPF sem máscara.
     cpfLimpo := CleanCharacter(meCPF.Text);
+
     if isCPF(cpfLimpo) = False then
     begin
       ShowMessage('CPF inválido! Revise, por favor!');
       tudoOK := False;
     end;
 
+
+    if checkEmail(edEmail.Text) = False then
+    begin
+      ShowMessage('Esse e-mail parece ser inválido. Revise, por favor!');
+      tudoOK := False;
+    end;
+
+
+
     if tudoOK then
     begin
       if rbNome.Checked then
       begin
-        ShowMessage('Dados salvos com sucesso ' + edNome.Text + '!');
+        primeiroNome := Copy(edNome.Text , 0, Pos(' ', edNome.Text) - 1);
+        ShowMessage('Dados salvos com sucesso, ' + primeiroNome + '!');
       end
       else
       begin
-        ShowMessage('Dados salvos com sucesso ' + edNomeSocial.Text + '!');
+        primeiroNome := Copy(edNomeSocial.Text , 0, Pos(' ', edNomeSocial.Text) - 1);
+        ShowMessage('Dados salvos com sucesso, ' + primeiroNome + '!');
       end;
     end;
   end;
@@ -228,16 +279,17 @@ implementation
     meCEP.Text := '';
   end;
 
+
   procedure TfrmFuncionarios.FormDestroy(Sender: TObject);
   begin
     application.Terminate;
   end;
 
 
+  procedure TfrmFuncionarios.FormClose(Sender: TObject; var Action: TCloseAction);
+    begin
+      application.Terminate;
+    end;
 
-procedure TfrmFuncionarios.FormClose(Sender: TObject; var Action: TCloseAction);
-  begin
-    application.Terminate;
-  end;
 
 end.
