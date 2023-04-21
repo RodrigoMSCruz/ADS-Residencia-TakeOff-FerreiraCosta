@@ -21,7 +21,6 @@ object frmCadCliente: TfrmCadCliente
     Height = 704
     Align = alClient
     TabOrder = 0
-    ExplicitLeft = -8
     object Label1: TLabel
       Left = 56
       Top = 88
@@ -173,6 +172,16 @@ object frmCadCliente: TfrmCadCliente
       TabOrder = 2
       Text = ''
     end
+    object btnOK: TButton
+      Left = 489
+      Top = 505
+      Width = 75
+      Height = 25
+      Caption = 'OK'
+      TabOrder = 10
+      Visible = False
+      OnClick = btnOKClick
+    end
   end
   object Panel2: TPanel
     Left = 0
@@ -181,9 +190,6 @@ object frmCadCliente: TfrmCadCliente
     Height = 41
     Align = alBottom
     TabOrder = 1
-    ExplicitLeft = 440
-    ExplicitTop = 368
-    ExplicitWidth = 185
     object btnInserir: TButton
       Left = 416
       Top = 6
@@ -194,13 +200,22 @@ object frmCadCliente: TfrmCadCliente
       OnClick = btnInserirClick
     end
     object btnExcluir: TButton
-      Left = 752
+      Left = 576
       Top = 6
       Width = 75
       Height = 25
       Caption = 'excluir'
       TabOrder = 1
       OnClick = btnExcluirClick
+    end
+    object btnEditar: TButton
+      Left = 497
+      Top = 6
+      Width = 75
+      Height = 25
+      Caption = 'editar'
+      TabOrder = 2
+      OnClick = btnEditarClick
     end
   end
   object dsCliente: TDataSource
@@ -209,18 +224,19 @@ object frmCadCliente: TfrmCadCliente
     Top = 488
   end
   object qryCliente: TFDQuery
-    Connection = dmUsuario.dbConnMySQL
     Left = 816
     Top = 448
   end
   object insCliente: TFDQuery
-    Connection = dmUsuario.dbConnMySQL
     Left = 816
     Top = 408
   end
   object delCliente: TFDQuery
-    Connection = dmUsuario.dbConnMySQL
     Left = 816
     Top = 360
+  end
+  object edtCliente: TFDQuery
+    Left = 816
+    Top = 312
   end
 end

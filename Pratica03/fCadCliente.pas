@@ -39,9 +39,14 @@ type
     edtDtNasc: TMaskEdit;
     btnExcluir: TButton;
     delCliente: TFDQuery;
+    btnEditar: TButton;
+    edtCliente: TFDQuery;
+    btnOK: TButton;
     procedure btnInserirClick(Sender: TObject);
     procedure btnExcluirClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure btnEditarClick(Sender: TObject);
+    procedure btnOKClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -96,8 +101,68 @@ begin
   end;
 end;
 
+
+
+procedure TfrmCadCliente.btnEditarClick(Sender: TObject);
+var id : integer;
+begin
+  try
+    qryCliente.SQL.Clear;
+    qryCliente.SQL.Text := 'select * from cliente';
+    id := qryCliente.FieldByName('id').AsInteger;
+    qryCliente.Open;
+
+    edtCliente.SQL.Clear;
+    edtCliente.SQL.Text := 'select * from cliente where id = :p_id';
+    edtCliente.ParamByName('p_id').AsInteger := id;
+    edtCliente.Open;
+
+    edtNome.Text := edtCliente.FieldByName('nome').AsString;
+    edtEmail.Text := edtCliente.FieldByName('email').AsString;
+    edtDtNasc.Text := edtCliente.FieldByName('dt_nasc').AsString;
+    edtCelular.Text := edtCliente.FieldByName('celular').AsString;
+    edtCEP.Text := edtCliente.FieldByName('cep').AsString;
+    edtEndereco.Text := edtCliente.FieldByName('endereco').AsString;
+    edtBairro.Text := edtCliente.FieldByName('bairro').AsString;
+    edtCidade.Text := edtCliente.FieldByName('cidade').AsString;
+    cbxUF.Text := edtCliente.FieldByName('uf').AsString;
+
+    btnOK.Visible := True;
+  except
+    ShowMessage('Erro na busca de cliente para editar.');
+  end;
+
+end;
+
+procedure TfrmCadCliente.btnOKClick(Sender: TObject);
+begin
+try
+    edtCliente.SQL.Clear;
+    edtCliente.SQL.Text := 'update cliente set nome = :p_nome, email = :p_email, dt_nasc = :p_dt_nasc, celular = :p_celular, cep = :p_cep, endereco = :p_endereco, bairro = :p_bairro, cidade = :p_cidade, uf = :p_uf)';
+    edtCliente.ParamByName('p_nome').AsString      := Trim(edtNome.Text);
+    edtCliente.ParamByName('p_email').AsString     := Trim(edtEmail.Text);
+    edtCliente.ParamByName('p_dt_nasc').AsDateTime := StrToDate(edtDtNasc.Text);
+    edtCliente.ParamByName('p_celular').AsString   := Trim(edtCelular.Text);
+    edtCliente.ParamByName('p_cep').AsInteger      := StrToInt(Trim(edtCEP.Text));
+    edtCliente.ParamByName('p_endereco').AsString  := Trim(edtEndereco.Text);
+    edtCliente.ParamByName('p_bairro').AsString    := Trim(edtBairro.Text);
+    edtCliente.ParamByName('p_cidade').AsString    := Trim(edtCidade.Text);
+    edtCliente.ParamByName('p_uf').AsString        := Trim(cbxUF.Text);
+    edtCliente.ExecSQL;
+    edtCliente.SQL.Clear;
+
+    qryCliente.SQL.Clear;
+    qryCliente.SQL.Text := 'select * from cliente';
+    qryCliente.Open;
+    ShowMessage('Edição ocorreu com sucesso.');
+  except
+    ShowMessage('Erro naedição do registro!');
+  end;
+end;
+
 procedure TfrmCadCliente.FormShow(Sender: TObject);
 begin
+    btnOK.Visible := False;
     qryCliente.SQL.Clear;
     qryCliente.SQL.Text := 'select * from cliente';
     qryCliente.Open;

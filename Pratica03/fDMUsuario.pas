@@ -12,7 +12,7 @@ uses
 
 type
   TdmUsuario = class(TDataModule)
-    dbConnMySQL: TFDConnection;
+    ferreiracosta_db: TFDConnection;
     insUsuario: TFDCommand;
     qryUsuario: TFDQuery;
     tbUsuario: TFDTable;
