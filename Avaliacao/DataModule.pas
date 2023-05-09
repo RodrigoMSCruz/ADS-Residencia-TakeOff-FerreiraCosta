@@ -13,8 +13,10 @@ uses
 type
   TDM = class(TDataModule)
     ADOConnection1: TADOConnection;
-    ADOQuery1: TADOQuery;
-    DataSource1: TDataSource;
+    dsPedidoVenda: TDataSource;
+    ADOQryPedidoVenda: TADOQuery;
+    ADOCommandPedidoVenda: TADOCommand;
+    procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -29,5 +31,12 @@ implementation
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 {$R *.dfm}
+
+procedure TDM.DataModuleCreate(Sender: TObject);
+begin
+  ADOConnection1.Connected := False;
+  ADOConnection1.ConnectionString := ADOConnection1.ConnectionString + ';datasource=DESKTOP-0CB2SE4\SQLEXPRESS' + 'initial catalog=sfc_bd';
+  ADOConnection1.Connected := True;
+end;
 
 end.
