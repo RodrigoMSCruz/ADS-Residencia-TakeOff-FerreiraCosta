@@ -4,6 +4,7 @@ object DM: TDM
   Height = 573
   Width = 509
   object ADOConnection1: TADOConnection
+    Connected = True
     ConnectionString = 
       'Provider=SQLNCLI11.1;Persist Security Info=False;User ID=sa;Init' +
       'ial Catalog=sfc_bd;Data Source=DESKTOP-0CB2SE4\SQLEXPRESS;Use Pr' +
@@ -18,8 +19,8 @@ object DM: TDM
   end
   object dsPedidoVenda: TDataSource
     DataSet = ADOQryPedidoVenda
-    Left = 48
-    Top = 208
+    Left = 160
+    Top = 144
   end
   object ADOQryPedidoVenda: TADOQuery
     Connection = ADOConnection1
@@ -29,9 +30,16 @@ object DM: TDM
     Left = 48
     Top = 144
   end
-  object ADOCommandPedidoVenda: TADOCommand
+  object ADOQryPedidoVendaIT: TADOQuery
+    Connection = ADOConnection1
+    CursorType = ctStatic
     Parameters = <>
-    Left = 176
-    Top = 144
+    Left = 48
+    Top = 256
+  end
+  object dsPedidoVendaIT: TDataSource
+    DataSet = ADOQryPedidoVendaIT
+    Left = 160
+    Top = 256
   end
 end

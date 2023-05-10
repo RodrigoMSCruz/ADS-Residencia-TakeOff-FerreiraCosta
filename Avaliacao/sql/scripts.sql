@@ -26,7 +26,6 @@ CREATE TABLE SFC_PEDIDO_VENDA_IT (
 	CONSTRAINT FK_SFC_PEDIDO_VENDA_IT_SFC_PRODUTO FOREIGN KEY (Codigo) REFERENCES SFC_PRODUTOS_ESTOQUE (Codigo)
 );
 
-
 DROP TABLE SFC_PEDIDO_VENDA_IT;
 
 CREATE TABLE SFC_PRODUTOS_ESTOQUE (
@@ -47,14 +46,28 @@ INSERT INTO SFC_PRODUTOS_ESTOQUE (Codigo, Descricao, Preco) VALUES (220, 'Gelade
 INSERT INTO SFC_PRODUTOS_ESTOQUE (Codigo, Descricao, Preco) VALUES (360, 'Cadeira Tramontina', 120.99);
 INSERT INTO SFC_PRODUTOS_ESTOQUE (Codigo, Descricao, Preco) VALUES (400, 'Chaleira', 200);
 INSERT INTO SFC_PRODUTOS_ESTOQUE (Codigo, Descricao, Preco) VALUES (500, 'TV Samsung 52', 1899);
+INSERT INTO SFC_PRODUTOS_ESTOQUE (Codigo, Descricao, Preco) VALUES (600, 'Piso Elizabeth', 60);
 
 select * from SFC_PRODUTOS_ESTOQUE;
 
-INSERT INTO SFC_PEDIDO_VENDA (Tipo, Datamovim, Fornecedor, ValorTotal)
-VALUES('VD', getDate(), '10230480001960', 0);
+INSERT INTO SFC_PEDIDO_VENDA_IT (Tipo, Nota, Datamovim, Fornecedor, Codigo, Qtd, Precounit, Precototal)
+VALUES ('VD', 1, getDate(), '10230480001960', 600, 20, 60, 1200);
 
-select * from SFC_PEDIDO_VENDA
+INSERT INTO SFC_PEDIDO_VENDA_IT (Tipo, Nota, Datamovim, Fornecedor, Codigo, Qtd, Precounit, Precototal)
+VALUES ('VD', 1, getDate(), '10230480001960', 200, 3, 30.9, 92.7);
+
+UPDATE SFC_PEDIDO_VENDA SET ValorTotal = 1292.7 WHERE Nota = 1;
+
+SELECT * from SFC_PEDIDO_VENDA
 
 DELETE FROM SFC_PEDIDO_VENDA_IT
 
-select * from SFC_PEDIDO_VENDA_IT;
+SELECT * from SFC_PEDIDO_VENDA_IT;
+
+SELECT Tipo, Nota, Datamovim, Fornecedor, Codigo, Qtd, Precounit, Precototal
+FROM SFC_PEDIDO_VENDA_IT
+WHERE Nota = 1;
+
+SELECT  Fornecedor, Codigo, Qtd, Precounit, Precototal 
+FROM SFC_PEDIDO_VENDA_IT
+WHERE Nota = 1;

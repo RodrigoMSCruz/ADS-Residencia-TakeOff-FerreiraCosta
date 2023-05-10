@@ -3,7 +3,8 @@ program Avaliacao;
 uses
   Vcl.Forms,
   Pedidos in 'Pedidos.pas' {frmPedidos},
-  DataModule in 'DataModule.pas' {DM: TDataModule};
+  DataModule in 'DataModule.pas' {DM: TDataModule},
+  AdicionarItem in 'AdicionarItem.pas' {frmAdicionarItem};
 
 {$R *.res}
 

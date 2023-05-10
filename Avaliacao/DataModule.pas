@@ -15,7 +15,8 @@ type
     ADOConnection1: TADOConnection;
     dsPedidoVenda: TDataSource;
     ADOQryPedidoVenda: TADOQuery;
-    ADOCommandPedidoVenda: TADOCommand;
+    ADOQryPedidoVendaIT: TADOQuery;
+    dsPedidoVendaIT: TDataSource;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

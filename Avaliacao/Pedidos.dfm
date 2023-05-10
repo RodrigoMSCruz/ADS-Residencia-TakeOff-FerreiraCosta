@@ -3,7 +3,7 @@ object frmPedidos: TfrmPedidos
   Top = 0
   Caption = 'Pedidos'
   ClientHeight = 552
-  ClientWidth = 724
+  ClientWidth = 545
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -27,10 +27,23 @@ object frmPedidos: TfrmPedidos
     Font.Style = [fsBold]
     ParentFont = False
   end
+  object lblItensDePedido: TLabel
+    Left = 8
+    Top = 314
+    Width = 101
+    Height = 16
+    Caption = 'Itens de Pedido'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
   object dbGridPedidosVendas: TDBGrid
     Left = 8
     Top = 48
-    Width = 369
+    Width = 409
     Height = 193
     DataSource = DM.dsPedidoVenda
     TabOrder = 0
@@ -41,7 +54,7 @@ object frmPedidos: TfrmPedidos
     TitleFont.Style = []
   end
   object btnGerarPedido: TButton
-    Left = 383
+    Left = 439
     Top = 48
     Width = 98
     Height = 25
@@ -50,12 +63,51 @@ object frmPedidos: TfrmPedidos
     OnClick = btnGerarPedidoClick
   end
   object btnExcluir: TButton
-    Left = 383
+    Left = 439
     Top = 88
     Width = 98
     Height = 25
     Caption = 'Excluir Pedido'
     TabOrder = 2
     OnClick = btnExcluirClick
+  end
+  object dbGridPedidosVendasIT: TDBGrid
+    Left = 8
+    Top = 336
+    Width = 409
+    Height = 185
+    DataSource = DM.dsPedidoVendaIT
+    TabOrder = 3
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+  end
+  object btnMaisMenosDetalhamento: TButton
+    Left = 8
+    Top = 264
+    Width = 409
+    Height = 25
+    Caption = 'Mais Detalhamento do Pedido'
+    TabOrder = 4
+    OnClick = btnMaisMenosDetalhamentoClick
+  end
+  object btnAdicionarItem: TButton
+    Left = 439
+    Top = 336
+    Width = 98
+    Height = 25
+    Caption = 'Adicionar Item'
+    TabOrder = 5
+    OnClick = btnAdicionarItemClick
+  end
+  object btnRemoverItem: TButton
+    Left = 439
+    Top = 376
+    Width = 98
+    Height = 25
+    Caption = 'Remover Item'
+    TabOrder = 6
   end
 end

@@ -13,9 +13,16 @@ type
     btnGerarPedido: TButton;
     lblPedidoDeVendas: TLabel;
     btnExcluir: TButton;
+    dbGridPedidosVendasIT: TDBGrid;
+    btnMaisMenosDetalhamento: TButton;
+    lblItensDePedido: TLabel;
+    btnAdicionarItem: TButton;
+    btnRemoverItem: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnGerarPedidoClick(Sender: TObject);
     procedure btnExcluirClick(Sender: TObject);
+    procedure btnMaisMenosDetalhamentoClick(Sender: TObject);
+    procedure btnAdicionarItemClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -29,7 +36,7 @@ implementation
 
 {$R *.dfm}
 
-uses DataModule, Data.Win.ADODB;
+uses DataModule, Data.Win.ADODB, AdicionarItem;
 
 
 
@@ -63,6 +70,7 @@ begin
   DM.ADOqryPedidoVenda.Open;
 end;
 
+
 procedure TfrmPedidos.btnExcluirClick(Sender: TObject);
 var Command: TADOCommand;
 begin
@@ -83,5 +91,26 @@ begin
 
 end;
 
+procedure TfrmPedidos.btnMaisMenosDetalhamentoClick(Sender: TObject);
+begin
+
+  DM.ADOQryPedidoVendaIT.Close;
+  DM.ADOQryPedidoVendaIT.SQL.Clear;
+  DM.ADOQryPedidoVendaIT.SQL.Text := 'SELECT  Fornecedor, Codigo, Qtd, Precounit, Precototal FROM SFC_PEDIDO_VENDA_IT WHERE Nota = :p_Nota';
+  DM.ADOQryPedidoVendaIT.Parameters.ParamByName('p_Nota').value := DM.ADOQryPedidoVenda.FieldByName('Nota').value;
+  DM.ADOQryPedidoVendaIT.Open;
+
+end;
+
+procedure TfrmPedidos.btnAdicionarItemClick(Sender: TObject);
+var adicionarItem : TForm;
+begin
+  try
+    adicionarItem := TfrmAdicionarItem.Create(Application);
+    adicionarItem.ShowModal();
+  finally
+    FreeAndNil(adicionarItem);
+  end;
+end;
 
 end.
