@@ -42,4 +42,17 @@ object DM: TDM
     Left = 160
     Top = 256
   end
+  object ADOQryProdutoEstoque: TADOQuery
+    AutoCalcFields = False
+    Connection = ADOConnection1
+    CursorType = ctStatic
+    Parameters = <>
+    Left = 48
+    Top = 352
+  end
+  object dsProdutoEstoque: TDataSource
+    DataSet = ADOQryProdutoEstoque
+    Left = 160
+    Top = 352
+  end
 end

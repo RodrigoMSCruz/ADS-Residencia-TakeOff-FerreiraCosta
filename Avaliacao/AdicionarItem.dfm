@@ -2,7 +2,7 @@ object frmAdicionarItem: TfrmAdicionarItem
   Left = 0
   Top = 0
   Caption = 'Adicionar Item'
-  ClientHeight = 310
+  ClientHeight = 289
   ClientWidth = 571
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -11,6 +11,7 @@ object frmAdicionarItem: TfrmAdicionarItem
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object lblCodigo: TLabel
@@ -39,9 +40,9 @@ object frmAdicionarItem: TfrmAdicionarItem
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object Label1: TLabel
+  object lblQuantidade: TLabel
     Left = 8
-    Top = 222
+    Top = 198
     Width = 117
     Height = 23
     Caption = 'Quantidade:'
@@ -52,9 +53,91 @@ object frmAdicionarItem: TfrmAdicionarItem
     Font.Style = [fsBold]
     ParentFont = False
   end
-  object edtCodigo: TEdit
+  object lblItem: TLabel
+    Left = 8
+    Top = 95
+    Width = 53
+    Height = 23
+    Caption = 'Item:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object lblPreco: TLabel
+    Left = 8
+    Top = 143
+    Width = 60
+    Height = 23
+    Caption = 'Pre'#231'o:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object dbtxtItem: TDBText
     Left = 86
-    Top = 36
+    Top = 93
+    Width = 459
+    Height = 28
+    DataField = 'Descricao'
+    DataSource = DM.dsProdutoEstoque
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clRed
+    Font.Height = -21
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object dbtPreco: TDBText
+    Left = 86
+    Top = 141
+    Width = 123
+    Height = 28
+    DataField = 'Preco'
+    DataSource = DM.dsProdutoEstoque
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clRed
+    Font.Height = -21
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+  end
+  object lblTotal: TLabel
+    Left = 344
+    Top = 198
+    Width = 56
+    Height = 23
+    Caption = 'Total:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object lblValorTotal: TLabel
+    Left = 416
+    Top = 198
+    Width = 129
+    Height = 23
+    Caption = '0'
+    Color = clRed
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clRed
+    Font.Height = -19
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object edtCodigo: TEdit
+    Left = 88
+    Top = 30
     Width = 187
     Height = 33
     Font.Charset = DEFAULT_CHARSET
@@ -65,18 +148,6 @@ object frmAdicionarItem: TfrmAdicionarItem
     NumbersOnly = True
     ParentFont = False
     TabOrder = 0
-  end
-  object dbgPedidoVenda: TDBGrid
-    Left = 86
-    Top = 80
-    Width = 459
-    Height = 120
-    TabOrder = 1
-    TitleFont.Charset = DEFAULT_CHARSET
-    TitleFont.Color = clWindowText
-    TitleFont.Height = -11
-    TitleFont.Name = 'Tahoma'
-    TitleFont.Style = []
   end
   object btnPesquisar: TBitBtn
     Left = 288
@@ -90,12 +161,13 @@ object frmAdicionarItem: TfrmAdicionarItem
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 2
+    TabOrder = 1
+    OnClick = btnPesquisarClick
   end
   object edtQuantidade: TEdit
     Left = 131
-    Top = 217
-    Width = 102
+    Top = 193
+    Width = 70
     Height = 33
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clRed
@@ -104,35 +176,51 @@ object frmAdicionarItem: TfrmAdicionarItem
     Font.Style = []
     NumbersOnly = True
     ParentFont = False
-    TabOrder = 3
+    TabOrder = 2
   end
   object btnAdicionar: TButton
-    Left = 249
-    Top = 217
-    Width = 145
+    Left = 14
+    Top = 248
+    Width = 259
     Height = 33
     Caption = 'Adicionar'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlue
-    Font.Height = -11
+    Font.Height = -21
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
-    TabOrder = 4
+    TabOrder = 3
+    OnClick = btnAdicionarClick
   end
   object btnCancelar: TButton
-    Left = 400
-    Top = 217
-    Width = 145
+    Left = 304
+    Top = 248
+    Width = 259
     Height = 33
     Caption = 'Cancelar'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clRed
-    Font.Height = -11
+    Font.Height = -21
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 4
+    OnClick = btnCancelarClick
+  end
+  object btnCalcular: TButton
+    Left = 207
+    Top = 193
+    Width = 89
+    Height = 33
+    Caption = 'Calcular'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
     Font.Name = 'Tahoma'
     Font.Style = []
     ParentFont = False
     TabOrder = 5
-    OnClick = btnCancelarClick
+    OnClick = btnCalcularClick
   end
 end

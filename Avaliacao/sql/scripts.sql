@@ -48,7 +48,7 @@ INSERT INTO SFC_PRODUTOS_ESTOQUE (Codigo, Descricao, Preco) VALUES (400, 'Chalei
 INSERT INTO SFC_PRODUTOS_ESTOQUE (Codigo, Descricao, Preco) VALUES (500, 'TV Samsung 52', 1899);
 INSERT INTO SFC_PRODUTOS_ESTOQUE (Codigo, Descricao, Preco) VALUES (600, 'Piso Elizabeth', 60);
 
-select * from SFC_PRODUTOS_ESTOQUE;
+select Codigo, Descricao, Preco from SFC_PRODUTOS_ESTOQUE;
 
 INSERT INTO SFC_PEDIDO_VENDA_IT (Tipo, Nota, Datamovim, Fornecedor, Codigo, Qtd, Precounit, Precototal)
 VALUES ('VD', 1, getDate(), '10230480001960', 600, 20, 60, 1200);
@@ -71,3 +71,6 @@ WHERE Nota = 1;
 SELECT  Fornecedor, Codigo, Qtd, Precounit, Precototal 
 FROM SFC_PEDIDO_VENDA_IT
 WHERE Nota = 1;
+
+SELECT * 
+FROM SFC_PEDIDO_VENDA_IT
