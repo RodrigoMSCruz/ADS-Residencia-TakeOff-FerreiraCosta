@@ -96,7 +96,7 @@ begin
 
   DM.ADOQryPedidoVendaIT.Close;
   DM.ADOQryPedidoVendaIT.SQL.Clear;
-  DM.ADOQryPedidoVendaIT.SQL.Text := 'SELECT  Fornecedor, Codigo, Qtd, Precounit, Precototal FROM SFC_PEDIDO_VENDA_IT WHERE Nota = :p_Nota';
+  DM.ADOQryPedidoVendaIT.SQL.Text := 'SELECT A.Fornecedor, A.Codigo, B.Descricao, A.Qtd, A.Precounit, A.Precototal FROM SFC_PEDIDO_VENDA_IT AS A INNER JOIN SFC_PRODUTOS_ESTOQUE AS B ON A.Codigo = B.Codigo WHERE Nota = :p_Nota';
   DM.ADOQryPedidoVendaIT.Parameters.ParamByName('p_Nota').value := DM.ADOQryPedidoVenda.FieldByName('Nota').value;
   DM.ADOQryPedidoVendaIT.Open;
 

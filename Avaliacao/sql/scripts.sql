@@ -58,19 +58,21 @@ VALUES ('VD', 1, getDate(), '10230480001960', 200, 3, 30.9, 92.7);
 
 UPDATE SFC_PEDIDO_VENDA SET ValorTotal = 1292.7 WHERE Nota = 1;
 
-SELECT * from SFC_PEDIDO_VENDA
+SELECT Tipo, Nota, Datamovim, Fornecedor, ValorTotal FROM SFC_PEDIDO_VENDA
 
 DELETE FROM SFC_PEDIDO_VENDA_IT
 
 SELECT * from SFC_PEDIDO_VENDA_IT;
 
-SELECT Tipo, Nota, Datamovim, Fornecedor, Codigo, Qtd, Precounit, Precototal
-FROM SFC_PEDIDO_VENDA_IT
+SELECT A.Tipo, A.Nota, A.Datamovim, A.Fornecedor, A.Codigo, B.Descricao, A.Qtd, A.Precounit, A.Precototal
+FROM SFC_PEDIDO_VENDA_IT AS A
+INNER JOIN SFC_PRODUTOS_ESTOQUE AS B ON A.Codigo = B.Codigo
 WHERE Nota = 1;
 
 SELECT  Fornecedor, Codigo, Qtd, Precounit, Precototal 
 FROM SFC_PEDIDO_VENDA_IT
 WHERE Nota = 1;
 
-SELECT * 
-FROM SFC_PEDIDO_VENDA_IT
+SELECT SUM(Precototal) AS SOMA FROM SFC_PEDIDO_VENDA_IT WHERE Nota = 1;
+
+SELECT SUM(Precototal) AS Soma FROM SFC_PEDIDO_VENDA_IT WHERE Nota = 2

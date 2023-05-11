@@ -3,7 +3,7 @@ object frmPedidos: TfrmPedidos
   Top = 0
   Caption = 'Pedidos'
   ClientHeight = 552
-  ClientWidth = 545
+  ClientWidth = 716
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -74,9 +74,15 @@ object frmPedidos: TfrmPedidos
   object dbGridPedidosVendasIT: TDBGrid
     Left = 8
     Top = 336
-    Width = 409
+    Width = 596
     Height = 185
     DataSource = DM.dsPedidoVendaIT
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 3
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
@@ -94,7 +100,7 @@ object frmPedidos: TfrmPedidos
     OnClick = btnMaisMenosDetalhamentoClick
   end
   object btnAdicionarItem: TButton
-    Left = 439
+    Left = 610
     Top = 336
     Width = 98
     Height = 25
@@ -103,8 +109,8 @@ object frmPedidos: TfrmPedidos
     OnClick = btnAdicionarItemClick
   end
   object btnRemoverItem: TButton
-    Left = 439
-    Top = 376
+    Left = 610
+    Top = 367
     Width = 98
     Height = 25
     Caption = 'Remover Item'

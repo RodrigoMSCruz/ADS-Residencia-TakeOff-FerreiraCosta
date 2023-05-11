@@ -81,6 +81,7 @@ end;
 procedure TfrmAdicionarItem.btnAdicionarClick(Sender: TObject);
 var
   Command: TADOCommand;
+  Command2: TADOCommand;
 begin
 
   Command := TADOCommand.Create(nil);
@@ -102,13 +103,38 @@ begin
     Command.Free;
   end;
 
+
+
+  //Calcular o somatório
+  //PROBLEMA ESTÁ AQUI!!!!
+
+  DM.ADOQrySomaPedidoVendaIT.SQL.Clear;
+  DM.ADOQrySomaPedidoVendaIT.SQL.Text := 'SELECT SUM(Precototal) AS Soma FROM SFC_PEDIDO_VENDA_IT WHERE Nota = p_Nota;';
+  DM.ADOQrySomaPedidoVendaIT.Parameters.ParamByName('p_Nota').value := DM.ADOQryPedidoVenda.FieldByName('Nota').value;
+  DM.ADOQrySomaPedidoVendaIT.Open;
+
+  Command2 := TADOCommand.Create(nil);
+  Try
+    Command2.Connection := DM.ADOConnection1;
+    Command2.CommandText := 'UPDATE SFC_PEDIDO_VENDA SET ValorTotal = :p_Soma WHERE Nota = :p_Nota';
+    Command2.Parameters.ParamByName('p_soma').value := DM.ADOQrySomaPedidoVendaIT.FieldByName('Soma').value;
+    Command2.Parameters.ParamByName('p_Nota').value := DM.ADOQryPedidoVenda.FieldByName('Nota').value;
+
+    Command2.Execute;
+  Finally
+    Command2.Free;
+  End;
+
   DM.ADOQryPedidoVendaIT.Close;
   DM.ADOQryPedidoVendaIT.SQL.Clear;
   DM.ADOQryPedidoVendaIT.SQL.Text := 'SELECT  Fornecedor, Codigo, Qtd, Precounit, Precototal FROM SFC_PEDIDO_VENDA_IT WHERE Nota = :p_Nota';
   DM.ADOQryPedidoVendaIT.Parameters.ParamByName('p_Nota').value := DM.ADOQryPedidoVenda.FieldByName('Nota').value;
   DM.ADOQryPedidoVendaIT.Open;
 
-  //Falta atualizar o somatório total na cabeça do pedido.
+  DM.ADOQryPedidoVenda.Close;
+  DM.ADOQryPedidoVenda.SQL.Clear;
+  DM.ADOQryPedidoVenda.SQL.Text := 'SELECT Tipo, Nota, Datamovim, Fornecedor, ValorTotal FROM SFC_PEDIDO_VENDA';
+  DM.ADOQryPedidoVenda.Open;
 
 end;
 

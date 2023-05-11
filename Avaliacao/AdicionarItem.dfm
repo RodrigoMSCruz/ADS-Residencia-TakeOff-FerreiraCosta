@@ -123,7 +123,7 @@ object frmAdicionarItem: TfrmAdicionarItem
   object lblValorTotal: TLabel
     Left = 416
     Top = 198
-    Width = 129
+    Width = 12
     Height = 23
     Caption = '0'
     Color = clRed

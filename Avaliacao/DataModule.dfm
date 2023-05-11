@@ -55,4 +55,10 @@ object DM: TDM
     Left = 160
     Top = 352
   end
+  object ADOQrySomaPedidoVendaIT: TADOQuery
+    Connection = ADOConnection1
+    Parameters = <>
+    Left = 280
+    Top = 256
+  end
 end
