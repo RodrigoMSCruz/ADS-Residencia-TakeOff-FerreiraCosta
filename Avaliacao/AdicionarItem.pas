@@ -42,12 +42,14 @@ implementation
 
 {$R *.dfm}
 
-uses DataModule, Data.Win.ADODB;
+uses DataModule, Data.Win.ADODB, Pedidos;
 
 
 
 procedure TfrmAdicionarItem.FormCreate(Sender: TObject);
 begin
+  dbtxtItem.Caption := '';
+  dbtPreco.Caption := '';
   edtQuantidade.Text := '1';
 end;
 
@@ -81,7 +83,6 @@ end;
 procedure TfrmAdicionarItem.btnAdicionarClick(Sender: TObject);
 var
   Command: TADOCommand;
-  Command2: TADOCommand;
 begin
 
   Command := TADOCommand.Create(nil);
@@ -104,38 +105,31 @@ begin
   end;
 
 
-
-  //Calcular o somatório
-  //PROBLEMA ESTÁ AQUI!!!!
-
-  DM.ADOQrySomaPedidoVendaIT.SQL.Clear;
-  DM.ADOQrySomaPedidoVendaIT.SQL.Text := 'SELECT SUM(Precototal) AS Soma FROM SFC_PEDIDO_VENDA_IT WHERE Nota = p_Nota;';
-  DM.ADOQrySomaPedidoVendaIT.Parameters.ParamByName('p_Nota').value := DM.ADOQryPedidoVenda.FieldByName('Nota').value;
-  DM.ADOQrySomaPedidoVendaIT.Open;
-
-  Command2 := TADOCommand.Create(nil);
-  Try
-    Command2.Connection := DM.ADOConnection1;
-    Command2.CommandText := 'UPDATE SFC_PEDIDO_VENDA SET ValorTotal = :p_Soma WHERE Nota = :p_Nota';
-    Command2.Parameters.ParamByName('p_soma').value := DM.ADOQrySomaPedidoVendaIT.FieldByName('Soma').value;
-    Command2.Parameters.ParamByName('p_Nota').value := DM.ADOQryPedidoVenda.FieldByName('Nota').value;
-
-    Command2.Execute;
-  Finally
-    Command2.Free;
-  End;
-
   DM.ADOQryPedidoVendaIT.Close;
   DM.ADOQryPedidoVendaIT.SQL.Clear;
-  DM.ADOQryPedidoVendaIT.SQL.Text := 'SELECT  Fornecedor, Codigo, Qtd, Precounit, Precototal FROM SFC_PEDIDO_VENDA_IT WHERE Nota = :p_Nota';
+  DM.ADOQryPedidoVendaIT.SQL.Text := 'SELECT A.Fornecedor, A.Codigo, B.Descricao, A.Qtd, A.Precounit, A.Precototal FROM SFC_PEDIDO_VENDA_IT AS A INNER JOIN SFC_PRODUTOS_ESTOQUE AS B ON A.Codigo = B.Codigo WHERE Nota = :p_Nota';
   DM.ADOQryPedidoVendaIT.Parameters.ParamByName('p_Nota').value := DM.ADOQryPedidoVenda.FieldByName('Nota').value;
   DM.ADOQryPedidoVendaIT.Open;
 
+  frmPedidos.dbGridPedidosVendasIT.Columns[2].Width := 150;
+
+ // SELECT DISTINCT A.Tipo, A.Nota, A.Datamovim AS DataMovimento,
+ //                 A.Fornecedor, C.Total AS ValorTotal
+ // FROM SFC_PEDIDO_VENDA AS A
+ // LEFT JOIN SFC_PEDIDO_VENDA_IT AS B ON A.Nota = B.Nota
+ // LEFT JOIN (
+ //   SELECT A.Nota, Sum(B.Precototal) As Total
+ //   FROM SFC_PEDIDO_VENDA AS A
+ //   INNER JOIN SFC_PEDIDO_VENDA_IT AS B ON A.Nota = B.Nota
+ //   GROUP BY A.Nota) AS C ON C.Nota = A.Nota';
+
+
   DM.ADOQryPedidoVenda.Close;
   DM.ADOQryPedidoVenda.SQL.Clear;
-  DM.ADOQryPedidoVenda.SQL.Text := 'SELECT Tipo, Nota, Datamovim, Fornecedor, ValorTotal FROM SFC_PEDIDO_VENDA';
-  DM.ADOQryPedidoVenda.Open;
-
+  DM.ADOqryPedidoVenda.SQL.Text := 'SELECT DISTINCT A.Tipo, A.Nota, A.Datamovim AS DataMovimento, A.Fornecedor, C.Total AS ValorTotal FROM SFC_PEDIDO_VENDA AS A ';
+  DM.ADOQryPedidoVenda.SQL.Text := DM.ADOQryPedidoVenda.SQL.Text + ' LEFT JOIN SFC_PEDIDO_VENDA_IT AS B ON A.Nota = B.Nota LEFT JOIN';
+  DM.ADOQryPedidoVenda.SQL.Text := DM.ADOQryPedidoVenda.SQL.Text + ' (SELECT A.Nota, Sum(B.Precototal) As Total FROM SFC_PEDIDO_VENDA AS A INNER JOIN SFC_PEDIDO_VENDA_IT AS B ON A.Nota = B.Nota GROUP BY A.Nota) AS C ON C.Nota = A.Nota';
+  DM.ADOqryPedidoVenda.Open;
 end;
 
 procedure TfrmAdicionarItem.btnCalcularClick(Sender: TObject);

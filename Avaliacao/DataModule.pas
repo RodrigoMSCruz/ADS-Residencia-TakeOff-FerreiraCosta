@@ -19,7 +19,6 @@ type
     dsPedidoVendaIT: TDataSource;
     ADOQryProdutoEstoque: TADOQuery;
     dsProdutoEstoque: TDataSource;
-    ADOQrySomaPedidoVendaIT: TADOQuery;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
