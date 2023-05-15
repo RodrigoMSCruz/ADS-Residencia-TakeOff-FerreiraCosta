@@ -144,7 +144,7 @@ end;
 
 procedure TfrmAdicionarItem.btnCancelarClick(Sender: TObject);
 begin
-  frmAdicionarItem.close;
+  frmAdicionarItem.close();
 end;
 
 

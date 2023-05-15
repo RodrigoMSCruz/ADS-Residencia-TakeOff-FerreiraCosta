@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids,
-  Vcl.StdCtrls;
+  Vcl.StdCtrls, Vcl.Menus;
 
 type
   TfrmPedidos = class(TForm)
@@ -18,12 +18,18 @@ type
     lblItensDePedido: TLabel;
     btnAdicionarItem: TButton;
     btnRemoverItem: TButton;
+    mmMenu: TMainMenu;
+    Pedidos1: TMenuItem;
+    Sobre1: TMenuItem;
+    Repositrio1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure btnGerarPedidoClick(Sender: TObject);
     procedure btnExcluirClick(Sender: TObject);
     procedure btnMaisMenosDetalhamentoClick(Sender: TObject);
     procedure btnAdicionarItemClick(Sender: TObject);
     procedure btnRemoverItemClick(Sender: TObject);
+    procedure Sobre1Click(Sender: TObject);
+    procedure Repositrio1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -74,6 +80,16 @@ begin
 end;
 
 
+procedure TfrmPedidos.Sobre1Click(Sender: TObject);
+begin
+  ShowMessage('Aplicação desenvolvida por Rodrigo de Moraes Santa Cruz como projeto de Avaliação da Residência entre Unit e Ferreira Costa.');
+  ShowMessage('LinkedIn: https://www.linkedin.com/ln/rodrigo-de-moraes-santa-cruz-86a09083/');
+end;
+
+procedure TfrmPedidos.Repositrio1Click(Sender: TObject);
+begin
+  ShowMessage('https://github.com/RodrigoMSCruz/ADS-Residencia-TakeOff-FerreiraCosta');
+end;
 
 procedure TfrmPedidos.btnGerarPedidoClick(Sender: TObject);
 var Command: TADOCommand;

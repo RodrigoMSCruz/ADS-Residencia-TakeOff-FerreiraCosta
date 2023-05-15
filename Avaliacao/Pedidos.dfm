@@ -10,6 +10,7 @@ object frmPedidos: TfrmPedidos
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
+  Menu = mmMenu
   OldCreateOrder = False
   OnCreate = FormCreate
   PixelsPerInch = 96
@@ -116,5 +117,19 @@ object frmPedidos: TfrmPedidos
     Caption = 'Remover Item'
     TabOrder = 6
     OnClick = btnRemoverItemClick
+  end
+  object mmMenu: TMainMenu
+    Left = 632
+    object Pedidos1: TMenuItem
+      Caption = 'Menu'
+      object Sobre1: TMenuItem
+        Caption = 'Sobre...'
+        OnClick = Sobre1Click
+      end
+      object Repositrio1: TMenuItem
+        Caption = 'Reposit'#243'rio...'
+        OnClick = Repositrio1Click
+      end
+    end
   end
 end
